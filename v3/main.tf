@@ -51,6 +51,7 @@ module "application" {
   disk_size             = var.app_disk_size
   gpu_type              = var.gpu_type
   gpu_count             = var.gpu_count
+  db_private_ip         = module.database.db_private_ip
   
   depends_on = [module.database, module.iam, module.network]
 }
