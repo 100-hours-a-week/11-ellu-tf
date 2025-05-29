@@ -1,17 +1,3 @@
-resource "google_compute_health_check" "app_health_check" {
-  name                = "${var.prefix}-app-health-check"
-  project             = var.project_id
-  check_interval_sec  = 10
-  timeout_sec         = 5
-  healthy_threshold   = 2
-  unhealthy_threshold = 3
-
-  http_health_check {
-    port         = 80
-    request_path = "/"
-  }
-}
-
 resource "google_compute_instance_template" "app_template" {
   name_prefix  = "${var.prefix}-app-template-"
   machine_type = var.machine_type
@@ -42,6 +28,7 @@ resource "google_compute_instance_template" "app_template" {
 
   metadata = {
     startup-script = templatefile("${path.module}/startup_script.tpl", {
+
     })
   }
 
@@ -80,20 +67,15 @@ resource "google_compute_region_instance_group_manager" "app_group" {
     port = 443
   }
 
-  auto_healing_policies {
-    health_check      = google_compute_health_check.app_health_check.id
-    initial_delay_sec = 300 
-  }
-
   update_policy {
     type                           = "PROACTIVE"
     minimal_action                 = "REPLACE"
     max_unavailable_fixed          = 2
     max_surge_fixed                = 2
     replacement_method             = "SUBSTITUTE"
-    instance_redistribution_type   = "NONE" # Changed from PROACTIVE to NONE
+    instance_redistribution_type   = "NONE"
   }
   
-  depends_on = [google_compute_health_check.app_health_check, google_compute_instance_template.app_template]
+  depends_on = [google_compute_instance_template.app_template]
   
 }
