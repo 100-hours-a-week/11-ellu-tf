@@ -87,7 +87,7 @@ resource "google_compute_instance" "app_server" {
   }
 
   scheduling {
-    on_host_maintenance = "TERMINATE"  # Required for instances with GPUs
+    on_host_maintenance = "TERMINATE" 
   }
 
   metadata_startup_script = templatefile("${path.module}/startup_script.tpl", {
