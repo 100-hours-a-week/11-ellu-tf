@@ -28,7 +28,7 @@ resource "google_compute_instance_template" "app_template" {
 
   metadata = {
     startup-script = templatefile("${path.module}/startup_script.tpl", {
-
+      db_private_ip = var.db_private_ip
     })
   }
 
