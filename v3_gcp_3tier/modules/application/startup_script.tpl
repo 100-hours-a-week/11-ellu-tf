@@ -191,5 +191,7 @@ chown -R ubuntu:ubuntu /opt/looper
 systemctl restart docker
 
 echo "Application server setup completed at $(date)!"
-echo "IMPORTANT: Reboot required for GPU driver activation"
-echo "Run 'sudo reboot' after setup completes"
+echo "Rebooting for GPU driver activation..."
+
+# 자동 재부팅으로 GPU 드라이버 활성화
+reboot
