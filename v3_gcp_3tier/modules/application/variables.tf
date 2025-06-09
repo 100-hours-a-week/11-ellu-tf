@@ -58,3 +58,8 @@ variable "gpu_count" {
   type        = number
 }
 
+variable "db_private_ip" {
+  description = "Private IP address of the database instance"
+  type        = string
+}
+
