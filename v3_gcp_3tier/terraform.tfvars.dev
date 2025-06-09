@@ -1,0 +1,23 @@
+# Dev Environment Variables for Terraform
+project_id        = "primeval-rain-460507-n3"  # 실제 DEV 프로젝트
+region            = "asia-northeast3"
+zones             = ["asia-northeast3-a", "asia-northeast3-b"]
+db_zone           = "asia-northeast3-a"
+prefix            = "looper-dev"
+subnet_cidr       = "10.0.0.0/24"
+
+app_machine_type  = "g2-standard-4"
+db_machine_type   = "n2-standard-4"
+disk_image        = "ubuntu-os-cloud/ubuntu-2204-lts"
+app_disk_size     = 50
+db_disk_size      = 200
+gpu_type          = "nvidia-l4"
+gpu_count         = 1
+
+backup_bucket     = "looper-dev-db-backups-rina"
+backup_schedule   = "0 0 * * *"
+
+ssl_certificate   = ""
+create_dns_record = false
+domain_name       = "dev.looper.my"
+dns_managed_zone  = ""
