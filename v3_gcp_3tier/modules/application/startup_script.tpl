@@ -191,6 +191,28 @@ chown -R ubuntu:ubuntu /opt/looper
 systemctl restart docker
 
 echo "Application server setup completed at $(date)!"
+echo "Starting initial services..."
+
+# Wait a moment for docker to be ready
+sleep 10
+
+# Change to looper directory
+cd /opt/looper
+
+# Authenticate with GAR and pull initial images
+echo "Authenticating with Google Artifact Registry..."
+gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+echo "Pulling initial service images..."
+# Try to pull latest images, but don't fail if they don't exist yet
+docker pull asia-northeast3-docker.pkg.dev/primeval-rain-460507-n3/looper/frontend:latest || echo "Frontend image not found, will be deployed via CI/CD"
+docker pull asia-northeast3-docker.pkg.dev/primeval-rain-460507-n3/looper/backend:latest || echo "Backend image not found, will be deployed via CI/CD"
+docker pull asia-northeast3-docker.pkg.dev/primeval-rain-460507-n3/looper/ai-summary:latest || echo "AI Summary image not found, will be deployed via CI/CD"
+
+echo "Starting infrastructure services..."
+# Start only infrastructure services first (kafka, zookeeper, otel-collector)
+docker-compose -f docker-compose.prod.yml up -d looper-zookeeper looper-kafka otel-collector || echo "Infrastructure services will start when docker-compose file is available"
+
 echo "Rebooting for GPU driver activation..."
 
 # 자동 재부팅으로 GPU 드라이버 활성화
