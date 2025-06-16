@@ -1,9 +1,19 @@
 output "instance_group" {
-  description = "The instance group for the application servers"
-  value       = google_compute_region_instance_group_manager.app_group.instance_group
+  description = "The unmanaged instance group for the application servers"
+  value       = google_compute_instance_group.app_group.self_link
 }
 
 output "instance_names" {
-  description = "The base name for the instances"
-  value       = "${var.prefix}-app"
+  description = "The names of the app server instances"
+  value       = [for instance in google_compute_instance.app_server : instance.name]
+}
+
+output "instance_internal_ips" {
+  description = "The internal IP addresses of the app servers"
+  value       = [for addr in google_compute_address.app_internal_ip : addr.address]
+}
+
+output "instance_zones" {
+  description = "The zones where app servers are deployed"
+  value       = [for instance in google_compute_instance.app_server : instance.zone]
 }

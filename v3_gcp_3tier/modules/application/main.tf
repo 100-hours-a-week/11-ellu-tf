@@ -1,19 +1,31 @@
-resource "google_compute_instance_template" "app_template" {
-  name_prefix  = "${var.prefix}-app-template-"
+resource "google_compute_address" "app_internal_ip" {
+  count        = length(var.zones)
+  name         = "${var.prefix}-app-internal-ip-${count.index + 1}"
+  subnetwork   = var.subnet_self_link
+  address_type = "INTERNAL"
+  region       = var.region
+  project      = var.project_id
+}
+
+resource "google_compute_instance" "app_server" {
+  count        = length(var.zones)
+  name         = "${var.prefix}-app-server-${count.index + 1}"
   machine_type = var.machine_type
+  zone         = var.zones[count.index]
   project      = var.project_id
   tags         = ["ssh", "http-server", "https-server"]
 
-  disk {
-    source_image = var.disk_image
-    auto_delete  = true
-    boot         = true
-    disk_size_gb = var.disk_size
-    disk_type    = "pd-ssd"
+  boot_disk {
+    initialize_params {
+      image = var.disk_image
+      size  = var.disk_size
+      type  = "pd-ssd"
+    }
   }
 
   network_interface {
     subnetwork = var.subnet_self_link
+    network_ip = google_compute_address.app_internal_ip[count.index].address
   }
 
   guest_accelerator {
@@ -22,13 +34,13 @@ resource "google_compute_instance_template" "app_template" {
   }
 
   scheduling {
-    on_host_maintenance = "TERMINATE"  
+    on_host_maintenance = "TERMINATE" 
     automatic_restart   = true
   }
 
   metadata = {
     startup-script = templatefile("${path.module}/startup_script.tpl", {
-
+      db_private_ip = var.db_private_ip
     })
   }
 
@@ -37,25 +49,18 @@ resource "google_compute_instance_template" "app_template" {
     scopes = ["cloud-platform"]
   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  deletion_protection = false
+
+  depends_on = [google_compute_address.app_internal_ip]
 }
 
-resource "google_compute_region_instance_group_manager" "app_group" {
-  name               = "${var.prefix}-app-group"
-  base_instance_name = "${var.prefix}-app"
-  region             = var.region
-  project            = var.project_id
+resource "google_compute_instance_group" "app_group" {
+  name        = "${var.prefix}-app-group"
+  description = "Unmanaged instance group for app servers"
+  zone        = var.zones[0] 
+  project     = var.project_id
   
-  distribution_policy_zones = var.zones
-  distribution_policy_target_shape = "BALANCED" 
-
-  target_size        = 1  
-
-  version {
-    instance_template = google_compute_instance_template.app_template.id
-  }
+  instances = [for instance in google_compute_instance.app_server : instance.self_link]
 
   named_port {
     name = "http"
@@ -67,15 +72,5 @@ resource "google_compute_region_instance_group_manager" "app_group" {
     port = 443
   }
 
-  update_policy {
-    type                           = "PROACTIVE"
-    minimal_action                 = "REPLACE"
-    max_unavailable_fixed          = 2
-    max_surge_fixed                = 2
-    replacement_method             = "SUBSTITUTE"
-    instance_redistribution_type   = "NONE"
-  }
-  
-  depends_on = [google_compute_instance_template.app_template]
-  
+  depends_on = [google_compute_instance.app_server]
 }
