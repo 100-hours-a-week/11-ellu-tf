@@ -1,0 +1,52 @@
+# Local .terraform directories (at any level)
+**/.terraform/*
+
+# .tfstate files (at any level)
+**/*.tfstate
+**/*.tfstate.*
+
+# Crash log files (at any level)
+**/crash.log
+**/crash.*.log
+
+# Exclude all .tfvars files at any level (likely to contain sensitive data)
+**/*.tfvars
+**/*.tfvars.json
+
+# Ignore override files at any level
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+# !**/example_override.tf
+
+# Include tfplan files to ignore the plan output at any level
+**/*tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore .terraform.lock.hcl if you want to (uncomment if needed)
+# **/.terraform.lock.hcl
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Log files (at any level)
+**/*.log
