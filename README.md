@@ -12,7 +12,7 @@
 
 ![V4 Architecture Diagram](./diagrams/v4-architecture.png)
 
-V4는 AWS 기반의 프로덕션 레벨의 Kubernetes 클러스터로, EKS 대신 kubeadm을 사용한 자체 구축 클러스터입니다. 멀티클라우드 환경과 하이브리드 연결을 통해 복잡한 엔터프라이즈 요구사항을 충족합니다.
+V4는 AWS 기반의 프로덕션 레벨의 Kubernetes 클러스터로, EKS 대신 kubeadm을 사용한 자체 구축 클러스터입니다. 멀티클라우드 환경과 하이브리드 연결을 통해 복잡한 요구사항을 충족합니다.
 
 #### 🔧 **EC2 Cluster** (`ec2-cluster/`)
 
