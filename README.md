@@ -10,8 +10,7 @@
 ### ☸️ V4: 멀티클라우드 Kubernetes 클러스터
 **`v4_aws_kubeadm/`**
 
-[V4 Architecture Diagram]
-<img width="810" height="1007" alt="v4" src="[https://github.com/user-attachments/assets/7beecb81-f2e2-47c0-bf90-d94bff413b72]" />
+![dsadas](https://github.com/user-attachments/assets/b548edc7-3e0c-49df-8b41-11db6e6f31dc)
 
 V4는 AWS 기반의 프로덕션 레벨의 Kubernetes 클러스터로, EKS 대신 kubeadm을 사용한 자체 구축 클러스터입니다. 멀티클라우드 환경과 하이브리드 연결을 통해 복잡한 요구사항을 충족합니다.
 
@@ -97,7 +96,6 @@ AWS OpenVPN VPC (10.2.0.0/16)
 ### 🏢 V3: 3-Tier GCP Architecture
 **`v3_gcp_3tier/`**
 
-[V3 Architecture Diagram]
 <img width="810" height="1007" alt="v3" src="https://github.com/user-attachments/assets/9b629533-e063-4007-bec3-a7d9d1dcb0cb" />
 
 V3는 확장 가능하고 고가용성을 제공하는 3계층 웹 애플리케이션 아키텍처입니다. 모듈화된 설계를 통해 각 계층을 독립적으로 관리하고 확장할 수 있습니다.
@@ -140,7 +138,6 @@ V3는 확장 가능하고 고가용성을 제공하는 3계층 웹 애플리케�
 ### 🖥️ V2: GPU 지원 GCP VM
 **`v2_gcp_vm_gpu/`**
 
-[V2 Architecture Diagram]
 <img width="906" height="645" alt="v2" src="https://github.com/user-attachments/assets/8795e05a-a207-437d-80f7-7552386fb4b1" />
 
 V2는 V1의 기본 구조를 유지하면서 GPU 가속 기능을 추가한 버전입니다. AI/ML 워크로드와 고성능 컴퓨팅이 필요한 애플리케이션을 위한 인프라를 제공합니다.
@@ -164,7 +161,6 @@ V2는 V1의 기본 구조를 유지하면서 GPU 가속 기능을 추가한 버�
 ### 🎯 V1: 기본 GCP VM 구축
 **`v1_gcp_vm/`**
 
-[V1 Architecture Diagram]
 <img width="906" height="645" alt="v1" src="https://github.com/user-attachments/assets/fc6d3069-683d-4de5-84bf-a08ebb23f5d3" />
 
 V1은 Google Cloud Platform에서 가장 기본적인 단일 VM 인프라를 구축한 버전입니다.
