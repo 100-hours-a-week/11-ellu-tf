@@ -12,17 +12,18 @@
 
 ![dsadas](https://github.com/user-attachments/assets/b548edc7-3e0c-49df-8b41-11db6e6f31dc)
 
-V4는 AWS 기반의 프로덕션 레벨의 Kubernetes 클러스터로, EKS 대신 kubeadm을 사용한 자체 구축 클러스터입니다. 멀티클라우드 환경과 하이브리드 연결을 통해 복잡한 요구사항을 충족합니다.
+V4는 AWS 기반의 프로덕션 레벨의 Kubernetes 클러스터로, EKS 대신 kubeadm을 사용한 자체 구축 클러스터입니다. 멀티클라우드 환경과 하이브리드 연결을 통해 요구사항에 맞는 구조를 설계하고 구축했습니다.
 
 #### 🔧 **EC2 Cluster** (`ec2-cluster/`)
 
 **핵심 아키텍처:**
 - **Multi-AZ 배포**: 2개 가용 영역에 걸친 고가용성 설계
 - **Control Plane**: 단일 마스터 노드 (확장 가능한 구조)
-- **Worker Nodes**: 다중 AZ 분산 배치로 장애 복구 능력 강화
-- **전용 Kafka Node**: 메시징 시스템을 위한 독립 노드
+- **GPU 워크로드 전용 Node (GCP)**: AI 추론 모델 서버를 위한 GPU 가속이 가능한 노드
+- **Worker Nodes (AWS)**: 다중 AZ 분산 배치로 장애 복구 능력 강화
+- **Kafka Node (AWS)**: 메시징 시스템을 위한 독립 노드
 
-**네트워킹 (VPC 모듈):**
+**네트워킹 (AWS VPC 모듈):**
 ```
 ├── Public Subnets (2 AZ)     # NAT Gateway, Load Balancer
 ├── Private K8s Subnets (2 AZ) # Kubernetes 노드
