@@ -96,10 +96,11 @@ AWS OpenVPN VPC (10.2.0.0/16)
 
 ### 🏢 V3: 3-Tier GCP Architecture
 **`v3_gcp_3tier/`**
+<img width="790" height="987" alt="3t" src="https://github.com/user-attachments/assets/975d993b-05e9-4238-a335-5b08230c0aa4" />
 
-<img width="810" height="1007" alt="v3" src="https://github.com/user-attachments/assets/9b629533-e063-4007-bec3-a7d9d1dcb0cb" />
 
-V3는 확장 가능하고 고가용성을 제공하는 3계층 웹 애플리케이션 아키텍처입니다. 모듈화된 설계를 통해 각 계층을 독립적으로 관리하고 확장할 수 있습니다.
+
+V3는 확장 가능하고 고가용성을 제공하는 컨테이너 기반의 3계층 웹 애플리케이션 아키텍처입니다. 모듈화된 설계를 통해 각 계층을 독립적으로 관리하고 확장할 수 있습니다.
 
 **3-Tier 아키텍처 구성:**
 
@@ -110,12 +111,10 @@ V3는 확장 가능하고 고가용성을 제공하는 3계층 웹 애플리케�
 
 #### **Application Tier (애플리케이션 계층)**
 - **Instance Group Manager**: 자동 스케일링과 롤링 업데이트 지원
-- **Auto Scaling**: CPU 사용률 기반 자동 확장/축소
-- **Private Subnet**: 보안을 위한 프라이빗 네트워크 배치
 - **Cloud NAT**: 아웃바운드 인터넷 접근 제공
 
 #### **Data Tier (데이터 계층)**
-- **Compute Engine DB**: 커스텀 PostgreSQL 데이터베이스 & ChromaDB 서버
+- **DB**: 커스텀 PostgreSQL 데이터베이스 & ChromaDB 서버
 - **Persistent Disk**: 고성능 SSD 스토리지
 - **백업 자동화**: Cloud Storage를 활용한 정기 백업
 - **보안 격리**: 데이터베이스 전용 서브넷 분리
